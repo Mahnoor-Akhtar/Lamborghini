@@ -1,4 +1,4 @@
-import { readdirSync, writeFileSync, renameSync, rmSync } from "fs";
+import { readdirSync, writeFileSync, renameSync, rmSync, cpSync } from "fs";
 
 // Scan built assets
 const assets = readdirSync("dist/client/assets");
@@ -25,6 +25,7 @@ const html = `<!DOCTYPE html>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Lamborghini – Power. Luxury. Legacy.</title>
   <meta name="description" content="Explore the Lamborghini lineup: Revuelto SV, Urus SE Performante, and Temerario." />
+  <link rel="icon" type="image/png" href="/favicon.png" />
 ${cssTag}
 ${jsTags}
 </head>
@@ -38,12 +39,14 @@ writeFileSync("dist/client/index.html", html, "utf-8");
 console.log("✅ Generated dist/client/index.html with assets:", jsFiles, css);
 
 try {
-  // Move client folder to a temporary location outside of dist
-  renameSync("dist/client", "dist-client-temp");
+  // Copy client folder to a temporary location outside of dist
+  cpSync("dist/client", "dist-client-temp", { recursive: true });
   // Delete the old dist folder (which now only contains server artifacts)
   rmSync("dist", { recursive: true, force: true });
-  // Rename the temporary folder back to dist, making it the root
-  renameSync("dist-client-temp", "dist");
+  // Copy the temporary folder back to dist, making it the root
+  cpSync("dist-client-temp", "dist", { recursive: true });
+  // Delete the temporary folder
+  rmSync("dist-client-temp", { recursive: true, force: true });
   console.log("✅ Restructured output directory for Vercel deployment.");
 } catch (e) {
   console.error("❌ Failed to restructure output directory:", e);

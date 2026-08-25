@@ -7,10 +7,10 @@ type Props = {
 };
 
 const defaultImages = [
-  "/images/lamborghini - Search Images_files/2024-lamborghini-revuelto-front-three-quarters-102-6421b7db0d727.jpg",
-  "/images/lamborghini - Search Images_files/lamborghini-revuelto-at-auto-shanghai-2023.jpg",
-  "/images/lamborghini - Search Images_files/b0FwJOyobV6NnXq4XV6y--Iohrc.png",
-  "/images/lamborghini - Search Images_files/Flag_Feedback.png",
+  "/images/revuelto_yellow.jpg",
+  "/images/urus_green.jpg",
+  "/images/temerario_blue.jpg",
+  "/images/lambo_cockpit.jpg",
 ];
 
 export default function CarGallery({ open, onClose, images }: Props) {
